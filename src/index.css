@@ -65,6 +65,7 @@ body {
   background: #ffbd20;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   transition: all 0.2s ease;
+  z-index: 50;
 }
 .container.show-chatbot #chatbot-toggler {
   transform: rotate(90deg);
@@ -159,7 +160,8 @@ body {
   display: flex;
   gap: 11px;
   align-items: center;
-  text: black;
+  color: black;
+  
 }
 .chat-body .message svg {
   width: 35px;

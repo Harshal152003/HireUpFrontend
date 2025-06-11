@@ -131,6 +131,49 @@ const ResumeForm = () => {
           ))}
           {isEducationOpen && <button type="button" onClick={() => addEducation({ degree: "", institution: "", year: "" })} className="text-[#ffbd20]">+ Add Education</button>}
         </div>
+     {/* Project Section */}
+<div className="mt-4">
+  <div className="flex items-center justify-between cursor-pointer" onClick={() => setIsProjectsOpen(!isProjectsOpen)}>
+    <h3 className="text-[#ffbd20] font-semibold">Projects</h3>
+    {isProjectsOpen ? <FaChevronUp /> : <FaChevronDown />}
+  </div>
+
+  {isProjectsOpen && (
+    <div className="mt-2 space-y-4">
+      {projectFields.map((item, index) => (
+        <div key={item.id} className="flex flex-col gap-2 bg-[#3d3d3d] p-4 rounded border border-[#ffbd20]">
+          <input
+            {...register(`projects.${index}.title`)}
+            placeholder="Project Title"
+            className="p-2 border border-[#ffbd20] rounded bg-[#3d3d3d] text-white"
+          />
+          <textarea
+            {...register(`projects.${index}.description`)}
+            placeholder="Project Description"
+            className="p-2 border border-[#ffbd20] rounded bg-[#3d3d3d] text-white"
+          />
+          <button
+            type="button"
+            onClick={() => removeProject(index)}
+            className="self-end text-red-500"
+          >
+            Remove
+          </button>
+        </div>
+      ))}
+      <button
+        type="button"
+        onClick={() => addProject({ title: "", description: "" })}
+        className="text-[#ffbd20] mt-2"
+      >
+        + Add Project
+      </button>
+    </div>
+  )}
+</div>
+
+ 
+
         {/* Experience Section */}
 <div className="mt-4">
   <div className="flex justify-between items-center cursor-pointer" onClick={() => setIsExperienceOpen(!isExperienceOpen)}>
@@ -155,8 +198,7 @@ const ResumeForm = () => {
         {/* Save & Load Buttons */}
         <button type="submit" className="bg-[#ffbd20] text-[#3d3d3d] px-4 py-2 rounded font-semibold mt-4 w-full">Save Resume</button>
         <button type="button" onClick={loadSavedResume} className="bg-blue-500 text-white px-4 py-2 rounded mt-2 w-full">Load Resume</button>
-        <button type="button" onClick={handlePrint} className="bg-green-500 text-white px-4 py-2 rounded mt-2 w-full">Download PDF</button>
-      </form>
+</form>
 
       {/* Right: Resume Preview */}
       <div ref={printRef} className="w-[230mm] h-[320mm] text-black bg-white shadow-lg p-[20mm] mx-auto print-a4 overflow-hidden">

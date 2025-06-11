@@ -17,6 +17,8 @@ const TalentCard = (props: any) => {
     const [date, setDate] = useState<Date|null>(null);
     const [time, setTime] = useState<any>(null);
     const [profile, setProfile] = useState<any>(null);
+    const [emailModal, { open: openEmail, close: closeEmail }] = useDisclosure(false);
+
     const handleOffer = (status:string) => {
         let interview:any={id, applicantId:profile?.id, applicationStatus:status};
         if(status=="INTERVIEWING"){
@@ -78,15 +80,36 @@ const TalentCard = (props: any) => {
         }
         <Divider color="mineShaft.7" size="xs" />
         <div className="flex [&>*]:w-1/2 [&>*]:p-1">
+        
             {
                 !props.invited && <>
                     <Link to={`/talent-profile/${profile?.id}`}>
                         <Button color="brightSun.4" variant="outline" fullWidth>Profile</Button>
                     </Link>
 
-                    <div>
-                        {props.posted ? <Button color="brightSun.4" variant="light" onClick={open} rightSection={<IconCalendarMonth className="w-5 h-5" />} fullWidth>Schedule</Button> : <Button color="brightSun.4" variant="light" fullWidth>Message</Button>}
-                    </div>
+                  {props.posted ? (
+  <Button
+    color="brightSun.4"
+    variant="light"
+    onClick={open}
+    rightSection={<IconCalendarMonth className="w-5 h-5" />}
+    fullWidth
+  >
+    Schedule
+  </Button>
+) : (
+  <Button
+  color="brightSun.4"
+  variant="light"
+  className="[&>*]:w-28 [&>*]:p-1 "
+  
+  onClick={openEmail}
+>
+  Contact
+</Button>
+
+)}
+
                 </>
             }{
 
@@ -111,6 +134,24 @@ const TalentCard = (props: any) => {
                 <Button onClick={()=>handleOffer("INTERVIEWING")} color="brightSun.4" variant="light" fullWidth>Schedule</Button>
             </div>
         </Modal>
+        <Modal opened={emailModal} onClose={closeEmail} radius="lg" title="Contact Talent" centered>
+  <div className="flex flex-col gap-3">
+    {profile?.email ? (
+      <div>
+        Email:&emsp;
+        <a
+          href={`mailto:${profile?.email}`}
+          className="text-bright-sun-400 hover:underline"
+        >
+          {profile?.email}
+        </a>
+      </div>
+    ) : (
+      <div className="text-mine-shaft-400">Email not available</div>
+    )}
+  </div>
+</Modal>
+
         <Modal opened={app} onClose={closeApp} radius="lg" title="Application" centered>
             <div className="flex flex-col gap-4">
                 <div >
